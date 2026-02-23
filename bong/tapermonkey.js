@@ -212,8 +212,8 @@
   };
 
   setInterval(addBanButtons, 1000);
-  setInterval(addToolButtons, 1000);
-
-  setTimeout(addToolButtons, 200);
   setTimeout(addBanButtons, 500);
+  
+  setInterval(addToolButtons, 1000);
+  setTimeout(addToolButtons, 200);
 })();

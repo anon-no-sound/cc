@@ -14,7 +14,9 @@
 .ls_catrow,
 .footer_copy,
 .listing_sub_header,
-.listing_head {
+.listing_head,
+.footer_seo,
+.footer {
   display: none !important;
 }
 
@@ -44,6 +46,19 @@ body.theme_light .page_header {
 .react-draggable > div {
   --im-float-window-legacy-wrapper-bg-color: oklch(0.27 0 0);
   --im-float-window-legacy-body-bg-color: white;
+
+  & > div:nth-child(1) {
+    /* header */
+
+    & > span:nth-child(2) {
+      /* title */
+
+      & > span {
+        /*  badge */
+        display: none;
+      }
+    }
+  }
 
   & > div:nth-child(2) {
     /* content */
