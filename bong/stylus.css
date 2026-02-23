@@ -24,7 +24,11 @@
 body,
 body.theme_light,
 body.theme_light .page_header {
+  --color-neutral-500: oklch(0.56 0 0);
+  --color-neutral-600: oklch(0.44 0 0);
+  --color-neutral-700: oklch(0.37 0 0);
   --color-neutral-800: oklch(0.27 0 0);
+  --color-neutral-900: oklch(0.2 0 0);
 
   --color-violet-400: oklch(0.71 0.16 294);
   --color-violet-500: oklch(0.61 0.22 293);
@@ -39,9 +43,9 @@ body.theme_light .page_header {
   --bc-thm-header-separator-color: var(--bc-thm-header-bg);
   --bc-thm-mlsTabs-item-accentStripe-borderColor: var(--bc-thm-header-bg);
   --bc-thm-headerSearch-input_dark-bg: rgba(255, 255, 255, 0.15);
-  --bc-thm-legacyBtn_green-bg: var(--color-violet-600);
-  --bc-thm-legacyBtn_green-bg-hover: var(--color-violet-500);
-  --bc-thm-legacyBtn_green-bg-active: var(--color-violet-700);
+  --bc-thm-legacyBtn_green-bg: var(--color-neutral-600);
+  --bc-thm-legacyBtn_green-bg-hover: var(--color-neutral-500);
+  --bc-thm-legacyBtn_green-bg-active: var(--color-neutral-700);
 }
 
 .page_header {
