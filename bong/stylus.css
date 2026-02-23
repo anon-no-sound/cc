@@ -42,6 +42,17 @@ body.theme_light .page_header {
   top: 1px;
 }
 
+/* counter badges in header */
+.has_hint {
+  & > span > span,
+  & > div > button > div {
+    background: oklch(0.8 0.18 152) !important;
+    max-width: 14px;
+    min-width: 14px;
+    height: 14px;
+  }
+}
+
 /* floating chat window (dynamic class names) */
 .react-draggable > div {
   --im-float-window-legacy-wrapper-bg-color: oklch(0.27 0 0);
