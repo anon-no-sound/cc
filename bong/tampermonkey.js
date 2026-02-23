@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-23-0001
+// @version      2026-02-23-0002
 // @description  Tools for BongaCams
 // @author       anon-no-sound
 // @match        https://*.bongacams35.com/*
@@ -92,7 +92,7 @@
               "bc_inline_flex bc_flex_full_center mplg_btn bc_mrn_btn __hint plt_btn __light bc_inline_flex bc_flex_full_center",
             title: "Ban from profile",
           });
-          btn.innerText = "🚫";
+          btn.innerText = "✕";
 
           btn.onclick = () => {
             btn.innerText = "...";
@@ -102,7 +102,7 @@
                 window.history.back(); // scripts can't close stream page for some reason
               })
               .finally(() => {
-                btn.innerText = "🚫";
+                btn.innerText = "✕";
               });
           };
         }
@@ -177,9 +177,9 @@
       const btn = GM_addElement(toolbar, "button", {
         class: "unsubscribe-btn lsti_box",
         style:
-          "margin-left: 8px; border: none; border-radius: 2px; background: oklch(0.27 0.00 0); color: oklch(0.97 0.00 0); opacity: .8; cursor: pointer;",
+          "margin-left: 8px; border: none; border-radius: 22px; background: oklch(0.27 0.00 0); color: oklch(0.97 0.00 0); opacity: .8; cursor: pointer; height: 22px;",
       });
-      btn.innerText = "🚫";
+      btn.innerText = "✕";
 
       const handleBan = (username) => () => {
         btn.innerText = "...";
@@ -202,7 +202,7 @@
         setTimeout(() => {
           if (btn.innerText === "...") return;
 
-          btn.innerText = "🚫";
+          btn.innerText = "✕";
           btn.onclick = handleClick;
         }, 3000);
       };
