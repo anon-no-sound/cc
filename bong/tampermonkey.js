@@ -177,7 +177,7 @@
       const btn = GM_addElement(toolbar, "button", {
         class: "unsubscribe-btn lsti_box",
         style:
-          "margin-left: 8px; border: none; border-radius: 22px; background: oklch(0.27 0.00 0); color: oklch(0.97 0.00 0); opacity: .8; cursor: pointer; height: 22px;",
+          "margin-left: 8px; border: none; border-radius: 22px; background: black; color: oklch(0.97 0.00 0); opacity: .8; cursor: pointer; height: 22px;",
       });
       btn.innerText = "✕";
 

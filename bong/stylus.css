@@ -194,13 +194,29 @@ body.theme_light .listing_tabs_wrp {
   --bc-thm-listingTabs-link-color-hover: var(--color-neutral-200);
 }
 .listing_tabs .lt_link {
-  font-weight: 500;
+  font-weight: 600;
 }
 .listing_tabs .lt_link:after {
   border-radius: 0;
 }
 .listing_tabs_wrp {
   margin: 0;
+}
+.listing_tabs {
+  & > li:nth-child(2),
+  & > li:nth-child(4),
+  & > li:nth-child(5),
+  & > li:nth-child(6),
+  & > li:nth-child(7),
+  & > li:nth-child(8) {
+    display: none;
+  }
+}
+.lt_pin_wrp.__inner {
+  display: none !important;
+}
+#setting_culture {
+  display: none;
 }
 
 /* main content (list page) */
