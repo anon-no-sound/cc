@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Bong
-// @namespace    http://tampermonkey.net/
+// @name         BongaCams
+// @namespace    https://github.com/anon-no-sound/cc
 // @version      2026-02-13
-// @description  try to take over the world!
-// @author       You
+// @description  Tools for BongaCams
+// @author       anon-no-sound
 // @match        https://*.bongacams35.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bongacams35.com
 // @grant        GM_addElement
@@ -213,7 +213,7 @@
 
   setInterval(addBanButtons, 1000);
   setTimeout(addBanButtons, 500);
-  
+
   setInterval(addToolButtons, 1000);
   setTimeout(addToolButtons, 200);
 })();
