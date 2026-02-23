@@ -15,9 +15,35 @@
 .footer_copy,
 .listing_sub_header,
 .listing_head,
+.lst_tags,
 .footer_seo,
-.footer {
+.footer,
+.__try_me,
+.lst_nick::before,
+.js-pin_model,
+.lsti_box.lst_social,
+.lst_bage.__live,
+.lst_bage.__mobile,
+.lst_bage.__hd_plus,
+.lst_bage.__vibratoy,
+.lst_bage.__hd {
   display: none !important;
+}
+
+/* model thumbnail */
+.ls_thumb {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* model thumbnail footer */
+.wrapper .mls_without_thumb .lst_info {
+  bottom: 0;
+}
+
+/* "new" model badge, everything else is hidden */
+.lst_bage.__new {
+  left: 0 !important;
 }
 
 :root,
@@ -46,6 +72,9 @@ body.theme_light .page_header {
   --bc-thm-legacyBtn_green-bg: var(--color-neutral-600);
   --bc-thm-legacyBtn_green-bg-hover: var(--color-neutral-500);
   --bc-thm-legacyBtn_green-bg-active: var(--color-neutral-700);
+  --bc-thm-controlPopover-button-bg: var(--color-neutral-600);
+  --bc-thm-controlPopover-button-bg-hover: var(--color-neutral-500);
+  --bc-thm-controlPopover-button-bg-active: var(--color-neutral-700);
 }
 
 .page_header {
@@ -69,6 +98,14 @@ body.theme_light .page_header {
     min-width: 14px;
     height: 14px;
   }
+}
+
+/* counter badges elsewhere */
+.bc_bubble {
+  background: var(--color-violet-400) !important;
+  max-width: 14px;
+  min-width: 14px;
+  height: 14px;
 }
 
 /* floating chat window (dynamic class names) */
@@ -142,4 +179,7 @@ body.theme_light .listing_tabs_wrp {
 }
 .listing_tabs .lt_link:after {
   border-radius: 0;
+}
+.listing_tabs_wrp {
+  margin: 0;
 }
