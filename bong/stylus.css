@@ -1,0 +1,50 @@
+.wrapper .menu_container {
+    display: none;
+}
+
+.listing_wrp.__with_sidebar {
+    max-width: unset;
+}
+
+.bc_chat_header,
+#bMemberBalance,
+.header_bar,
+.hn_search,
+.header_online_wrp,
+.ls_catrow,
+.footer_copy {
+  display: none !important;
+}
+
+:root,
+body,
+body.theme_light,
+body.theme_light .page_header {
+  --bc-thm-header-bg: black;
+  --bc-thm-header-separator-color: var(--bc-thm-header-bg);
+  --bc-thm-mlsTabs-item-accentStripe-borderColor: var(--bc-thm-header-bg);
+  --bc-thm-headerSearch-input_dark-bg: rgba(255, 255, 255, 0.15);
+}
+
+.page_header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* floating chat window (dynamic class names) */
+.react-draggable > div {
+  --im-float-window-legacy-wrapper-bg-color: oklch(0.27 0.00 0);
+    
+    & > div:nth-child(2) {
+        /* content */
+        padding: 0;
+        
+        & > div:nth-child(1) {
+            /* toolbar */
+            background: transparent;
+            border: none;
+            padding: 12px;
+        }
+    }
+}
