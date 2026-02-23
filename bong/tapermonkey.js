@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-13
+// @version      2026-02-23-0001
 // @description  Tools for BongaCams
 // @author       anon-no-sound
 // @match        https://*.bongacams35.com/*
