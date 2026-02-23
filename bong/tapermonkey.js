@@ -99,6 +99,7 @@
             unsubscribe(username)
               .then(() => {
                 window.close();
+                window.history.back(); // scripts can't close stream page for some reason
               })
               .finally(() => {
                 btn.innerText = "Ban";
