@@ -1,9 +1,9 @@
 .wrapper .menu_container {
-    display: none;
+  display: none;
 }
 
 .listing_wrp.__with_sidebar {
-    max-width: unset;
+  max-width: unset;
 }
 
 .bc_chat_header,
@@ -12,7 +12,9 @@
 .hn_search,
 .header_online_wrp,
 .ls_catrow,
-.footer_copy {
+.footer_copy,
+.listing_sub_header,
+.listing_head {
   display: none !important;
 }
 
@@ -27,24 +29,55 @@ body.theme_light .page_header {
 }
 
 .page_header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 30px;
+}
+
+.page_header .header_logo .logo_icon {
+  width: 102px;
+  top: 1px;
 }
 
 /* floating chat window (dynamic class names) */
 .react-draggable > div {
-  --im-float-window-legacy-wrapper-bg-color: oklch(0.27 0.00 0);
-    
-    & > div:nth-child(2) {
-        /* content */
-        padding: 0;
-        
-        & > div:nth-child(1) {
-            /* toolbar */
-            background: transparent;
-            border: none;
-            padding: 12px;
-        }
+  --im-float-window-legacy-wrapper-bg-color: oklch(0.27 0 0);
+  --im-float-window-legacy-body-bg-color: white;
+
+  & > div:nth-child(2) {
+    /* content */
+    padding: 0;
+
+    & > div:nth-child(1) {
+      /* toolbar */
+      background: transparent;
+      border: none;
+      padding: 12px;
     }
+
+    & > div:nth-child(2) {
+      /* messages container */
+      background: transparent;
+
+      & > div:nth-child(2) {
+        background: transparent;
+
+        & > div {
+          background: transparent;
+        }
+      }
+    }
+  }
+}
+
+/* main tabs */
+.listing_tabs_wrp,
+body.theme_light .listing_tabs_wrp {
+  --bc-thm-listingTabs-item_selected-link-line-borderColor: black;
+  border-bottom: 0;
+  --bc-thm-listingTabs-borderColor: oklch(0.92 0 0);
+}
+.listing_tabs .lt_link:after {
+  border-radius: 0;
 }

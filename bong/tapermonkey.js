@@ -66,7 +66,8 @@
           console.error("name detection failed", e);
         }
 
-        const username = document.location.pathname.split("/")[2];
+        const urlParts = document.location.pathname.split("/").filter(Boolean);
+        const username = urlParts[urlParts.length - 1];
 
         if (!toolbar.querySelector("#btn-lcr")) {
           const btn = GM_addElement(toolbar, "div", {
