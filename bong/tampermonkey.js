@@ -2,6 +2,7 @@
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
 // @version      2026-02-25_001
+// @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
 // @description  Tools for BongaCams
 // @author       anon-no-sound
 // @match        https://*.bongacams35.com/*
