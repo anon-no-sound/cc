@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-23-0002
+// @version      2026-02-25_001
 // @description  Tools for BongaCams
 // @author       anon-no-sound
 // @match        https://*.bongacams35.com/*
@@ -29,10 +29,34 @@
   };
 
   let displayName = "";
-  const openLCR = () => {
+
+  const openLCR = (displayName) => {
     if (!displayName) return;
     const url = `https://livecamrips.to/search/${displayName}`;
     window.open(url, "_blank");
+  };
+
+  const openStatbate = (username) => {
+    if (!username) return;
+    const url = `https://statbate.com/search/2/${username}`;
+    window.open(url, "_blank");
+  };
+
+  const addLinkButton = (toolbar, id, text, onClick) => {
+    if (toolbar.querySelector(`#${id}`)) return;
+
+    const btn = GM_addElement(toolbar, "div", {
+      id,
+      class:
+        "bc_inline_flex bc_flex_full_center mplg_btn bc_mrn_btn __hint plt_btn __light bc_inline_flex bc_flex_full_center",
+    });
+
+    btn.onclick = onClick;
+
+    GM_addElement(btn, "div", {
+      class: "mplg_btn_text",
+      textContent: text,
+    });
   };
 
   const addToolButtons = () => {
@@ -69,21 +93,10 @@
         const urlParts = document.location.pathname.split("/").filter(Boolean);
         const username = urlParts[urlParts.length - 1];
 
-        if (!toolbar.querySelector("#btn-lcr")) {
-          const btn = GM_addElement(toolbar, "div", {
-            id: "btn-lcr",
-            class:
-              "bc_inline_flex bc_flex_full_center mplg_btn bc_mrn_btn __hint plt_btn __light bc_inline_flex bc_flex_full_center",
-            title: displayName,
-          });
-
-          btn.onclick = openLCR;
-
-          GM_addElement(btn, "div", {
-            class: "mplg_btn_text",
-            textContent: "LCR",
-          });
-        }
+        addLinkButton(toolbar, "btn-lcr", "LCR", () => openLCR(displayName));
+        addLinkButton(toolbar, "btn-statbate", "Stats", () =>
+          openStatbate(username),
+        );
 
         if (!toolbar.querySelector("#btn-ban")) {
           const btn = GM_addElement(toolbar, "button", {
