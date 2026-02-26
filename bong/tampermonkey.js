@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-25_002
+// @version      2026-02-26_001
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -32,13 +32,19 @@
 
   let displayName = "";
 
+  const extractUsername = () => {
+    const urlParts = document.location.pathname.split("/").filter(Boolean);
+    return urlParts[urlParts.length - 1];
+  };
+
   const openLCR = (displayName) => {
     if (!displayName) return;
     const url = `https://livecamrips.to/search/${displayName}`;
     window.open(url, "_blank");
   };
 
-  const openStatbate = (username) => {
+  const openStatbate = () => {
+    const username = extractUsername();
     if (!username) return;
     const url = `https://statbate.com/search/2/${username}`;
     window.open(url, "_blank");
@@ -92,13 +98,8 @@
           console.error("name detection failed", e);
         }
 
-        const urlParts = document.location.pathname.split("/").filter(Boolean);
-        const username = urlParts[urlParts.length - 1];
-
         addLinkButton(toolbar, "btn-lcr", "LCR", () => openLCR(displayName));
-        addLinkButton(toolbar, "btn-statbate", "Stats", () =>
-          openStatbate(username),
-        );
+        addLinkButton(toolbar, "btn-statbate", "Stats", openStatbate);
 
         if (!toolbar.querySelector("#btn-ban")) {
           const btn = GM_addElement(toolbar, "button", {
@@ -110,6 +111,8 @@
           btn.innerText = "✕";
 
           btn.onclick = () => {
+            const username = extractUsername();
+
             btn.innerText = "...";
             unsubscribe(username)
               .then(() => {
