@@ -1,3 +1,4 @@
+"use strict";
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
@@ -206,4 +207,3 @@
     setInterval(addToolButtons, 1000);
     setTimeout(addToolButtons, 200);
 })();
-export {};

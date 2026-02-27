@@ -12,7 +12,7 @@
         /* Bundler mode */
         "moduleResolution": "bundler",
         "verbatimModuleSyntax": true,
-        "moduleDetection": "force",
+        // "moduleDetection": "force",
         /* Linting */
         "strict": true,
         "noUnusedLocals": true,
