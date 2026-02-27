@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-26_001
+// @version      2026-02-27_003
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -18,9 +18,10 @@
   const authorUsername = "anon4509";
 
   const csrfKey = "csrf_value";
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const wait = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
-  const awaitSelector = async (selector, timeout = 5000) => {
+  const awaitSelector = async (selector: string, timeout = 5000) => {
     const start = Date.now();
     while (Date.now() - start < timeout) {
       const element = document.querySelector(selector);
@@ -37,7 +38,7 @@
     return urlParts[urlParts.length - 1];
   };
 
-  const openLCR = (displayName) => {
+  const openLCR = (displayName: string) => {
     if (!displayName) return;
     const url = `https://livecamrips.to/search/${displayName}`;
     window.open(url, "_blank");
@@ -50,7 +51,12 @@
     window.open(url, "_blank");
   };
 
-  const addLinkButton = (toolbar, id, text, onClick) => {
+  const addLinkButton = (
+    toolbar: Element,
+    id: string,
+    text: string,
+    onClick: () => void,
+  ) => {
     if (toolbar.querySelector(`#${id}`)) return;
 
     const btn = GM_addElement(toolbar, "div", {
@@ -84,10 +90,10 @@
         awaitSelector(nameTagSelector),
         awaitSelector(toolbarSelector),
       ]).then(([nameTag, toolbar]) => {
-        if (!nameTag) return;
+        if (!nameTag || !toolbar) return;
 
         try {
-          const nextName = nameTag?.innerText?.trim();
+          const nextName = (nameTag as HTMLDivElement).innerText.trim();
           if (nextName != displayName) {
             displayName = nextName;
             console.info("name detected", { name: displayName });
@@ -128,25 +134,32 @@
     }
   };
 
-  const unsubscribe = async (username) => {
-    const csrfToken = document.querySelector(`[data-${csrfKey}]`).dataset[
-      csrfKey
-    ];
-    if (!csrfToken) {
-      console.error("csrf token not found");
-      return;
-    }
+  const unsubscribe = async (username: string) => {
     if (!username) {
       console.error("username not provided");
       return;
     }
 
-    console.info("Unsubscribing", { username });
+    const csrfElement = document.querySelector(
+      `[data-${csrfKey}]`,
+    ) as HTMLDivElement;
+    if (!csrfElement) {
+      console.error("csrf element not found");
+      return;
+    }
+
+    const csrfToken = csrfElement.dataset[csrfKey];
+    if (!csrfToken) {
+      console.error("csrf token not set");
+      return;
+    }
+
+    console.info("unsubscribing", { username });
 
     const origin = window.location.origin;
     const referer = window.location.href;
 
-    const options = {
+    const options: Tampermonkey.Request = {
       method: "POST",
       url: `${origin}/api/profile/ban-user`,
       headers: {
@@ -199,23 +212,21 @@
       });
       btn.innerText = "✕";
 
-      const handleBan = (username) => () => {
+      const nickElement = toolbar.querySelector(
+        "a.lst_nick",
+      ) as HTMLAnchorElement;
+      const username = nickElement?.href.split("/profile/")[1];
+
+      const handleBan = () => {
         btn.innerText = "...";
-        unsubscribe(username)
-          .then(() => {
-            btn.style = "display: none;";
-          })
-          .finally(() => {
-            btn.innerText = `Ban ${username}`;
-          });
+        unsubscribe(username).then(() => {
+          btn.style = "display: none;";
+        });
       };
 
       const handleClick = () => {
-        const username = btn.parentElement
-          .querySelector("a.lst_nick")
-          .href.split("/profile/")[1];
         btn.innerText = `Ban ${username}?`;
-        btn.onclick = handleBan(username);
+        btn.onclick = handleBan;
 
         setTimeout(() => {
           if (btn.innerText === "...") return;

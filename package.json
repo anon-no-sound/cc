@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"@types/tampermonkey": "^5.0.5"
+	},
+	"devDependencies": {
+		"husky": "^9.1.7",
+		"typescript": "^5.9.3"
+	},
+	"scripts": {
+		"prepare": "husky",
+		"build": "tsc"
+	}
+}
