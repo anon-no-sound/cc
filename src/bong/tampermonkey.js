@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-27_003
-// @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
-// @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/bong/tampermonkey.js
+// @version      2026-02-27_004
+// @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
+// @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
 // @author       anon-no-sound
 // @match        https://*.bongacams35.com/*
