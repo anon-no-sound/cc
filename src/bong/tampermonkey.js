@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-27_006
+// @version      2026-02-28_001
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -27,6 +27,33 @@
         }
         return undefined;
     };
+    const listBannedUsers = async (page) => {
+        return fetch(`https://rf.bongacams35.com/blocked-users?page=${page}`, {
+            headers: {
+                accept: "*/*",
+                "accept-language": "ru,en;q=0.9",
+                priority: "u=1, i",
+                "sec-ch-ua": '"Chromium";v="142", "YaBrowser";v="25.12", "Not_A Brand";v="99", "Yowser";v="2.5"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": '"macOS"',
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "x-requested-with": "XMLHttpRequest",
+            },
+            referrer: "https://rf.bongacams35.com/blocked-users?display_name=karin",
+            body: null,
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+        })
+            .then((r) => r.json())
+            .then((r) => {
+            console.log(r);
+            return r.data.usersList.items.map((i) => i.username);
+        });
+    };
+    window.utils = { listBannedUsers };
     let displayName = "";
     const extractUsername = () => {
         const urlParts = document.location.pathname.split("/").filter(Boolean);
