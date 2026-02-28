@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_004
+// @version      2026-02-28_005
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -58,8 +58,96 @@
             return usernames;
         });
     };
-    unsafeWindow.utils = { listBannedUsers };
-    let displayName = "";
+    const getCSRFToken = () => {
+        const csrfElement = document.querySelector(`[data-${csrfKey}]`);
+        if (!csrfElement) {
+            throw new Error("csrf element not found");
+        }
+        const csrfToken = csrfElement.dataset[csrfKey];
+        if (!csrfToken) {
+            throw new Error("csrf token not set");
+        }
+        return csrfToken;
+    };
+    const ban = async (username) => {
+        if (!username) {
+            throw new Error("username not provided");
+        }
+        console.info("banning", { username });
+        const origin = window.location.origin;
+        const referer = window.location.href;
+        const options = {
+            method: "POST",
+            url: `${origin}/api/profile/ban-user`,
+            headers: {
+                "content-type": "text/plaincharset=UTF-8",
+                accept: "application/json",
+                "accept-language": "ru,enq=0.9",
+                origin,
+                referer,
+                "x-csrf-token": getCSRFToken(),
+                "user-agent": navigator.userAgent,
+                priority: "u=1, i",
+                "sec-ch-ua": '"Chromium"v="142", "YaBrowser"v="25.12", "Not_A Brand"v="99", "Yowser"v="2.5"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": '"macOS"',
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "x-requested-with": "XMLHttpRequest",
+            },
+            data: JSON.stringify({ username, authorUsername }),
+            fetch: true,
+        };
+        await GM.xmlHttpRequest(options).then((response) => {
+            if (response.status !== 200) {
+                console.error("Failed to unsubscribe", {
+                    username,
+                    options,
+                    response,
+                });
+            }
+            else {
+                console.info("Unsubscribed successfully", {
+                    username,
+                    options,
+                    response,
+                });
+            }
+        });
+    };
+    const unban = async (username) => {
+        if (!username) {
+            throw new Error("username not provided");
+        }
+        console.info("unbanning", { username });
+        const origin = window.location.origin;
+        const referer = window.location.href;
+        return fetch(`${origin}/api/profile/unban-user`, {
+            headers: {
+                accept: "application/json",
+                "accept-language": "ru,en;q=0.9",
+                "content-type": "text/plain;charset=UTF-8",
+                priority: "u=1, i",
+                "sec-ch-ua": '"Chromium";v="142", "YaBrowser";v="25.12", "Not_A Brand";v="99", "Yowser";v="2.5"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": '"macOS"',
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "x-csrf-token": getCSRFToken(),
+                "x-requested-with": "XMLHttpRequest",
+            },
+            referrer: referer,
+            body: JSON.stringify({
+                usernames: [username],
+                author_username: authorUsername,
+            }),
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+        });
+    };
     const extractUsername = () => {
         const urlParts = document.location.pathname.split("/").filter(Boolean);
         return urlParts[urlParts.length - 1];
@@ -77,6 +165,17 @@
         const url = `https://statbate.com/search/2/${username}`;
         window.open(url, "_blank");
     };
+    unsafeWindow.utils = {
+        awaitSelector,
+        ban,
+        extractUsername,
+        listBannedUsers,
+        openLCR,
+        openStatbate,
+        unban,
+        wait,
+    };
+    let displayName = "";
     const addLinkButton = (toolbar, id, text, onClick) => {
         if (toolbar.querySelector(`#${id}`))
             return;
@@ -133,7 +232,7 @@
                     btn.onclick = () => {
                         const username = extractUsername();
                         btn.innerText = "...";
-                        unsubscribe(username)
+                        ban(username)
                             .then(() => {
                             window.close();
                             window.history.back(); // scripts can't close stream page for some reason
@@ -145,64 +244,6 @@
                 }
             });
         }
-    };
-    const unsubscribe = async (username) => {
-        if (!username) {
-            console.error("username not provided");
-            return;
-        }
-        const csrfElement = document.querySelector(`[data-${csrfKey}]`);
-        if (!csrfElement) {
-            console.error("csrf element not found");
-            return;
-        }
-        const csrfToken = csrfElement.dataset[csrfKey];
-        if (!csrfToken) {
-            console.error("csrf token not set");
-            return;
-        }
-        console.info("unsubscribing", { username });
-        const origin = window.location.origin;
-        const referer = window.location.href;
-        const options = {
-            method: "POST",
-            url: `${origin}/api/profile/ban-user`,
-            headers: {
-                "content-type": "text/plaincharset=UTF-8",
-                accept: "application/json",
-                "accept-language": "ru,enq=0.9",
-                origin,
-                referer,
-                "x-csrf-token": csrfToken,
-                "user-agent": navigator.userAgent,
-                priority: "u=1, i",
-                "sec-ch-ua": '"Chromium"v="142", "YaBrowser"v="25.12", "Not_A Brand"v="99", "Yowser"v="2.5"',
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": '"macOS"',
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-origin",
-                "x-requested-with": "XMLHttpRequest",
-            },
-            data: JSON.stringify({ username, authorUsername }),
-            fetch: true,
-        };
-        await GM.xmlHttpRequest(options).then((response) => {
-            if (response.status !== 200) {
-                console.error("Failed to unsubscribe", {
-                    username,
-                    options,
-                    response,
-                });
-            }
-            else {
-                console.info("Unsubscribed successfully", {
-                    username,
-                    options,
-                    response,
-                });
-            }
-        });
     };
     const addBanButtons = () => {
         for (const toolbar of document.querySelectorAll(".lst_info")) {
@@ -217,7 +258,7 @@
             const username = nickElement?.href.split("/profile/")[1];
             const handleBan = () => {
                 btn.innerText = "...";
-                unsubscribe(username).then(() => {
+                ban(username).then(() => {
                     btn.style = "display: none;";
                 });
             };
