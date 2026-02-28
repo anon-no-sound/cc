@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_008
+// @version      2026-02-28_009
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -239,7 +239,8 @@
     };
     const addBanButtons = () => {
         for (const toolbar of document.querySelectorAll(".lst_info")) {
-            toolbar.querySelector(".unsubscribe-btn")?.remove();
+            if (toolbar.querySelector(".unsubscribe-btn"))
+                continue;
             const btn = GM_addElement(toolbar, "button", {
                 class: "unsubscribe-btn lsti_box",
                 style: "margin-left: 8px; border: none; border-radius: 22px; background: black; color: oklch(0.97 0.00 0); opacity: .8; cursor: pointer; height: 22px;",
