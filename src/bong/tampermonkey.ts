@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_006
+// @version      2026-02-28_007
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -115,6 +115,13 @@
     });
   };
 
+  const banMany = async (usernames: string[], delay = 500) => {
+    for (const username of usernames) {
+      await ban(username);
+      await wait(delay);
+    }
+  };
+
   const unban = async (username: string) => {
     if (!username) {
       throw new Error("username not provided");
@@ -145,6 +152,13 @@
     });
   };
 
+  const unbanMany = async (usernames: string[], delay = 500) => {
+    for (const username of usernames) {
+      await unban(username);
+      await wait(delay);
+    }
+  }
+
   const extractUsername = () => {
     const urlParts = document.location.pathname.split("/").filter(Boolean);
     return urlParts[urlParts.length - 1];
@@ -166,11 +180,13 @@
   (unsafeWindow as any).utils = {
     awaitSelector,
     ban,
+    banMany,
     extractUsername,
     listBannedUsers,
     openLCR,
     openStatbate,
     unban,
+    unbanMany,
     wait,
   };
 
