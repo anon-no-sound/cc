@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_002
+// @version      2026-02-28_003
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -56,7 +56,11 @@
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
-        return r.data.usersList.items.map((i: any) => i.username);
+        const usernames = r.data.usersList.items.map((i: any) => i.username);
+        for (const u of usernames) {
+          console.info(`${location.origin}/${u}`);
+        }
+        return usernames;
       });
   };
   (unsafeWindow as any).utils = { listBannedUsers };
