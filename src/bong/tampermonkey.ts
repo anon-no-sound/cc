@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_007
+// @version      2026-02-28_008
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -157,7 +157,7 @@
       await unban(username);
       await wait(delay);
     }
-  }
+  };
 
   const extractUsername = () => {
     const urlParts = document.location.pathname.split("/").filter(Boolean);
@@ -277,7 +277,7 @@
 
   const addBanButtons = () => {
     for (const toolbar of document.querySelectorAll(".lst_info")) {
-      if (toolbar.querySelector(".unsubscribe-btn")) continue;
+      toolbar.querySelector(".unsubscribe-btn")?.remove();
 
       const btn = GM_addElement(toolbar, "button", {
         class: "unsubscribe-btn lsti_box",
@@ -286,12 +286,12 @@
       });
       btn.innerText = "✕";
 
-      const nickElement = toolbar.querySelector(
-        "a.lst_nick",
-      ) as HTMLAnchorElement;
-      const username = nickElement?.href.split("/profile/")[1];
-
       const handleBan = () => {
+        const nickElement = toolbar.querySelector(
+          "a.lst_nick",
+        ) as HTMLAnchorElement;
+        const username = nickElement?.href.split("/profile/")[1];
+
         btn.innerText = "...";
         ban(username).then(() => {
           btn.style = "display: none;";
@@ -299,6 +299,11 @@
       };
 
       const handleClick = () => {
+        const nickElement = toolbar.querySelector(
+          "a.lst_nick",
+        ) as HTMLAnchorElement;
+        const username = nickElement?.href.split("/profile/")[1];
+
         btn.innerText = `Ban ${username}?`;
         btn.onclick = handleBan;
 
