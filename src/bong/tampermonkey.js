@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_001
+// @version      2026-02-28_002
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -11,6 +11,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bongacams35.com
 // @grant        GM_addElement
 // @grant        GM_xmlhttpRequest
+// @grant        unsafeWindow
 // ==/UserScript==
 (function () {
     "use strict";
@@ -53,7 +54,7 @@
             return r.data.usersList.items.map((i) => i.username);
         });
     };
-    window.utils = { listBannedUsers };
+    unsafeWindow.utils = { listBannedUsers };
     let displayName = "";
     const extractUsername = () => {
         const urlParts = document.location.pathname.split("/").filter(Boolean);
