@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_005
+// @version      2026-02-28_006
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -10,12 +10,23 @@
 // @match        https://*.bongacams35.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bongacams35.com
 // @grant        GM_addElement
-// @grant        GM_xmlhttpRequest
 // @grant        unsafeWindow
 // ==/UserScript==
 (function () {
     "use strict";
     const authorUsername = "anon4509";
+    const commonHeaders = {
+        "accept-language": "ru,en;q=0.9",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"macOS"',
+        "sec-ch-ua": '"Chromium";v="142", "YaBrowser";v="25.12", "Not_A Brand";v="99", "Yowser";v="2.5"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "user-agent": navigator.userAgent,
+        "x-requested-with": "XMLHttpRequest",
+        priority: "u=1, i",
+    };
     const csrfKey = "csrf_value";
     const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     const awaitSelector = async (selector, timeout = 5000) => {
@@ -31,16 +42,8 @@
     const listBannedUsers = async (page) => {
         return fetch(`https://rf.bongacams35.com/blocked-users?page=${page}`, {
             headers: {
+                ...commonHeaders,
                 accept: "*/*",
-                "accept-language": "ru,en;q=0.9",
-                priority: "u=1, i",
-                "sec-ch-ua": '"Chromium";v="142", "YaBrowser";v="25.12", "Not_A Brand";v="99", "Yowser";v="2.5"',
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": '"macOS"',
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-origin",
-                "x-requested-with": "XMLHttpRequest",
             },
             referrer: location.origin,
             body: null,
@@ -76,44 +79,25 @@
         console.info("banning", { username });
         const origin = window.location.origin;
         const referer = window.location.href;
-        const options = {
+        return fetch(`${origin}/api/profile/ban-user`, {
             method: "POST",
-            url: `${origin}/api/profile/ban-user`,
             headers: {
+                ...commonHeaders,
                 "content-type": "text/plaincharset=UTF-8",
                 accept: "application/json",
-                "accept-language": "ru,enq=0.9",
                 origin,
                 referer,
                 "x-csrf-token": getCSRFToken(),
-                "user-agent": navigator.userAgent,
-                priority: "u=1, i",
-                "sec-ch-ua": '"Chromium"v="142", "YaBrowser"v="25.12", "Not_A Brand"v="99", "Yowser"v="2.5"',
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": '"macOS"',
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-origin",
-                "x-requested-with": "XMLHttpRequest",
             },
-            data: JSON.stringify({ username, authorUsername }),
-            fetch: true,
-        };
-        await GM.xmlHttpRequest(options).then((response) => {
+            body: JSON.stringify({ username, authorUsername }),
+        }).then((response) => {
             if (response.status !== 200) {
-                console.error("Failed to unsubscribe", {
-                    username,
-                    options,
-                    response,
-                });
+                console.error("Failed to ban", { username, response });
             }
             else {
-                console.info("Unsubscribed successfully", {
-                    username,
-                    options,
-                    response,
-                });
+                console.info("Banned successfully", { username, response });
             }
+            return response;
         });
     };
     const unban = async (username) => {
@@ -125,18 +109,12 @@
         const referer = window.location.href;
         return fetch(`${origin}/api/profile/unban-user`, {
             headers: {
+                ...commonHeaders,
                 accept: "application/json",
-                "accept-language": "ru,en;q=0.9",
                 "content-type": "text/plain;charset=UTF-8",
-                priority: "u=1, i",
-                "sec-ch-ua": '"Chromium";v="142", "YaBrowser";v="25.12", "Not_A Brand";v="99", "Yowser";v="2.5"',
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": '"macOS"',
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-origin",
+                origin,
+                referer,
                 "x-csrf-token": getCSRFToken(),
-                "x-requested-with": "XMLHttpRequest",
             },
             referrer: referer,
             body: JSON.stringify({
