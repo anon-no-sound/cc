@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         BongaCams
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-02-28_003
+// @version      2026-02-28_004
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/bong/tampermonkey.js
 // @description  Tools for BongaCams
@@ -42,7 +42,7 @@
                 "sec-fetch-site": "same-origin",
                 "x-requested-with": "XMLHttpRequest",
             },
-            referrer: "https://rf.bongacams35.com/blocked-users?display_name=karin",
+            referrer: location.origin,
             body: null,
             method: "GET",
             mode: "cors",
