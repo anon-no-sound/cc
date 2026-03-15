@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         FastPic
 // @namespace    https://github.com/anon-no-sound/cc
-// @version      2026-03-15_001
+// @version      2026-03-15_002
 // @downloadURL  https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/fastpic/tampermonkey.js
 // @updateURL    https://raw.githubusercontent.com/anon-no-sound/cc/refs/heads/main/src/fastpic/tampermonkey.js
 // @description  Tools for FastPic
@@ -12,7 +12,6 @@
 // ==/UserScript==
 (function () {
     "use strict";
-    const nextHref = document.location.href.replace("/view/", "/fullview/");
-    console.info("nextHref", nextHref);
-    window.open(nextHref, "_self");
+    const url = document.location.href.replace("/view/", "/fullview/");
+    window.open(url, "_self");
 })();
