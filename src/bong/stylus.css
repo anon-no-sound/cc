@@ -96,7 +96,7 @@ body.theme_light.f_rh .page_header {
 .page_header {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 500;
   height: 30px;
 }
 .page_header .header_logo .logo_icon {
@@ -231,4 +231,9 @@ body.theme_light .listing_tabs_wrp {
 /* main content (list page) */
 .wrapper {
   background: black;
+}
+
+/* player */
+#EmbedSWFHolder {
+  z-index: 9999; /* ensures player is on top of the header in fullscreen */
 }
