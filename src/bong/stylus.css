@@ -78,7 +78,9 @@ body.theme_light,
 }
 
 .f_dub .bt30_green,
-body.theme_light.f_dub .bt30_green {
+body.theme_light.f_dub .bt30_green,
+:root,
+body.theme_light {
   --bc-thm-legacyBtn_green-bg: var(--color-neutral-600);
   --bc-thm-legacyBtn_green-bg-hover: var(--color-neutral-500);
   --bc-thm-legacyBtn_green-bg-active: var(--color-neutral-700);
@@ -96,7 +98,7 @@ body.theme_light.f_rh .page_header {
 .page_header {
   position: sticky;
   top: 0;
-  z-index: 500;
+  z-index: 100;
   height: 30px;
 }
 .page_header .header_logo .logo_icon {
@@ -231,9 +233,4 @@ body.theme_light .listing_tabs_wrp {
 /* main content (list page) */
 .wrapper {
   background: black;
-}
-
-/* player */
-#EmbedSWFHolder {
-  z-index: 9999; /* ensures player is on top of the header in fullscreen */
 }
