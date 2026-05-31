@@ -1,6 +1,9 @@
 {
     "compilerOptions": {
         "target": "ES2022",
+        "types": [
+            "tampermonkey"
+        ],
         "useDefineForClassFields": true,
         "lib": [
             "ES2022",
